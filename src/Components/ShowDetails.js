@@ -36,19 +36,19 @@ function ShowDetails() {
   return (
     <article>
       <h3>
-        {song.is_favorite ? <span>⭐️</span> : null} {song.name} By {song.artist}
+        {show.is_favorite ? <span>⭐️</span> : null} {show.title} By {show.director}
       </h3>
-      <h6>{song.album}</h6>
-      <p> Time: {song.time}</p>
+      <h6>{show.genre}</h6>
+      <p> Time: {show.date}</p>
       <div className="showNavigation">
         <div>
           {" "}
-          <Link to={`/songs`}>
+          <Link to={`/shows`}>
             <button>Back</button>
           </Link>
         </div>
         <div>
-          <Link to={`/songs/${id}/edit`}>
+          <Link to={`/shows/${id}/edit`}>
             <button>Edit</button>
           </Link>
         </div>
