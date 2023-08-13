@@ -15,7 +15,7 @@ function ShowEditForm() {
     release_date: "",
     season_count: "",
     episode_count: "",
-    cast: "",
+    cast_members: "",
     is_favorite: false,
   });
 
@@ -109,7 +109,7 @@ function ShowEditForm() {
           type="checkbox"
           name="cast"
           onChange={handleCheckboxChange}
-          checked={show.cast}
+          checked={show.cast_members}
         />
         <label htmlFor="is_favorite">Favorite:</label>
         <input

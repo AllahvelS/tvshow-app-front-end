@@ -1,4 +1,5 @@
 // DEPENDENCIES
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // PAGES
@@ -8,6 +9,7 @@ import Home from "./Pages/Home";
 import Index from "./Pages/Index";
 import New from "./Pages/New";
 import Show from "./Pages/Show";
+import Reviews from "./Pages/Review";
 
 // COMPONENTS
 import NavBar from "./Components/NavBar";
@@ -24,6 +26,7 @@ function App() {
             <Route path="/shows/new" element={<New />} />
             <Route exact path="/shows/:id" element={<Show />} />
             <Route path="/shows/:id/edit" element={<Edit />} />
+            <Route path="/reviews" element={<Reviews />} />
             <Route path="*" element={<FourOFour />} />
           </Routes>
         </main>

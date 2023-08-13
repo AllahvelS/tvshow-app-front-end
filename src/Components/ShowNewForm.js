@@ -24,9 +24,9 @@ function ShowNewForm() {
     director: "",
     genre: "",
     release_date: "",
-    season_count: "",
-    episode_count: "",
-    cast: "",
+    season_count: 0,
+    episode_count: 0,
+    cast_members: "",
     is_favorite: false,
   });
 
@@ -103,7 +103,7 @@ function ShowNewForm() {
           type="checkbox"
           name="cast"
           onChange={handleCheckboxChange}
-          checked={show.cast}
+          checked={show.cast_members}
         />
         <label htmlFor="is_favorite">Favorite:</label>
         <input
