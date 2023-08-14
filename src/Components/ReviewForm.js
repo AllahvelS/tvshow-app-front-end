@@ -1,41 +1,87 @@
-import React, { useState } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-const API = process.env.REACT_APP_API_URL;
+function ReviewForm(props) {
+  let { id } = useParams();
+  const { reviewDetails } = props;
 
-function ReviewForm({ showId, onReviewSubmit }) {
-  const [review, setReview] = useState("");
+  const [review, setReview] = useState({
+    reviewer: "",
+    title: "",
+    content: "",
+    rating: "",
+    show_id: id,
+  });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await axios.post(`${API}/shows/${showId}/reviews`, {
-        content: review,
-      });
-      // Assuming the API responds with the newly created review
-      // You can update the reviews state here if needed
-      console.log("Review added:", response.data);
-
-      // Clear the review input after submission
-      setReview("");
-      // Notify the parent component that a new review has been added
-      onReviewSubmit();
-    } catch (error) {
-      console.error("Error adding review:", error);
-    }
+  const handleTextChange = (event) => {
+    setReview({ ...review, [event.target.id]: event.target.value });
   };
 
+  useEffect(() => {
+    if (reviewDetails) {
+      setReview(reviewDetails);
+    }
+  }, [id, reviewDetails, props]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    props.handleSubmit(review, id);
+    if (reviewDetails) {
+      props.toggleView();
+    }
+    setReview({
+      reviewer: "",
+      title: "",
+      content: "",
+      rating: "",
+      show_id: id,
+    });
+  };
   return (
-    <div>
-      <h4>Add Review</h4>
+    <div className="Edit">
+      {props.children}
       <form onSubmit={handleSubmit}>
-        <textarea
-          value={review}
-          onChange={(e) => setReview(e.target.value)}
-          placeholder="Write your review here"
+        <label htmlFor="reviewer">Name:</label>
+        <input
+          id="reviewer"
+          value={review.reviewer}
+          type="text"
+          onChange={handleTextChange}
+          placeholder="Your name"
+          required
         />
-        <button type="submit">Submit Review</button>
+        <label htmlFor="title">Title:</label>
+        <input
+          id="title"
+          type="text"
+          required
+          value={review.title}
+          onChange={handleTextChange}
+        />
+        <label htmlFor="rating">Rating:</label>
+        <input
+          id="rating"
+          type="number"
+          name="rating"
+          min="0"
+          max="10"
+          step="1"
+          value={review.rating}
+          onChange={handleTextChange}
+        />
+        <label htmlFor="content">Review:</label>
+        <textarea
+          id="content"
+          type="text"
+          name="content"
+          value={review.content}
+          placeholder="What do you think..."
+          onChange={handleTextChange}
+        />
+
+        <br />
+
+        <input type="submit" />
       </form>
     </div>
   );

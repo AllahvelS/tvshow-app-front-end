@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Reviews from "../Pages/Review"; 
-import ReviewForm from "./ReviewForm"; 
+import Reviews from "./Reviews"; 
+import ReviewForm from "./ReviewForm";
+
 const API = process.env.REACT_APP_API_URL;
 
 function ShowDetails() {
@@ -10,12 +11,7 @@ function ShowDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    axios.get(`${API}/shows/${id}`).then((response) => {
-      setShow(response.data);
-    });
-  }, [id, navigate]);
-
+  
   const deleteShow = () => {
     axios
       .delete(`${API}/shows/${id}`)
@@ -29,21 +25,30 @@ function ShowDetails() {
     deleteShow();
   };
 
-  // Handler function for new review submission
-  const handleReviewSubmit = () => {
-    // Refresh show data after adding a review
-    axios.get(`${API}/shows/${id}`).then((response) => {
+// Further down inside the component
+useEffect(() => {
+  axios
+    .get(`${API}/shows/${id}`)
+    .then((response) => {
+      console.log(response.data);
       setShow(response.data);
-    });
-  };
+    })
+  .catch((c) => {
+    console.warn("catch", c);
+  });
+}, [id, API]);
 
   return (
     <article>
+      <img className="showImage" src={show.image} alt="Show image"></img>
       <h3>
         {show.is_favorite ? <span>⭐️</span> : null} {show.title} By {show.director}
       </h3>
-      <h6>{show.genre}</h6>
-      <p>Time: {show.date}</p>
+      <h5>Released: {show.release_date}</h5>
+      <h5>Genre: {show.genre}</h5>
+      <h5>Seasons:  {show.season_count}</h5>
+      <h5>Episodes: {show.episode_count}</h5>
+      <h5>Cast: {show.cast_members}</h5>
       <div className="showNavigation">
         <div>
           <Link to="/shows">
@@ -59,12 +64,7 @@ function ShowDetails() {
           <button onClick={handleDelete}>Delete</button>
         </div>
       </div>
-
-      
-      <ReviewForm showId={id} onReviewSubmit={handleReviewSubmit} />
-
-      
-      <Reviews reviews={show.reviews} />
+      <Reviews/>
     </article>
   );
 }
