@@ -6,7 +6,7 @@ const API = process.env.REACT_APP_API_URL;
 
 function Shows() {
   const [shows, setShows] = useState([]);
-  const [sortBy, setSortBy] = useState("release_date"); // Default sorting by release date
+  const [sortBy, setSortBy] = useState("release_date"); // sorting by release date
 
   useEffect(() => {
     axios
