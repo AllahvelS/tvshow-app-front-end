@@ -25,7 +25,7 @@ function ShowDetails() {
     deleteShow();
   };
 
-
+// Further down inside the component
 useEffect(() => {
   axios
     .get(`${API}/shows/${id}`)
