@@ -10,7 +10,7 @@ function Show({ show }) {
   const month = (releaseDate.getMonth() + 1).toString().padStart(2, "0");
   const day = releaseDate.getDate().toString().padStart(2, "0");
 
-
+  // Format the release date to display as YYYY-MM-DD
   const formattedReleaseDate = `${year}-${month}-${day}`;
 
   return (
